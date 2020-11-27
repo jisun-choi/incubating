@@ -1,8 +1,14 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/axios">axios</router-link>
+      <router-link to="/emit">emit</router-link>
+      <router-link to="/event">event</router-link>
+      <router-link to="/mixin">mixin</router-link>
+      <router-link to="/ref">ref</router-link>
+      <router-link to="/routing">routing</router-link>
+      <router-link to="/vuex">vuex</router-link>
+      <router-link to="/watch">watch</router-link>
     </div>
     <router-view/>
   </div>
@@ -18,14 +24,23 @@
 }
 
 #nav {
-  padding: 30px;
+  margin-top:100px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
 
   a {
+    text-decoration: none;
     font-weight: bold;
-    color: #2c3e50;
+    color: black;
+    font-size: 20px;
+    padding: 20px 50px;
 
     &.router-link-exact-active {
-      color: #42b983;
+      border-bottom: 3px solid #FF204B;
+      color: #FF204B;
+
     }
   }
 }
