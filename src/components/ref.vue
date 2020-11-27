@@ -1,19 +1,31 @@
 <template>
   <div id="ref">
-      <input type="text" id="refInput" placeholder="이름">
-      <input type="text" id="refInput" placeholder="나이">
-      <input type="text" id="refInput" placeholder="직업">
-      <button id="refBtn" type="button">확인</button>
+      <input type="text" class="refInput" ref="inputNameInfo" placeholder="이름" v-model="inputName">
+      <input type="text" class="refInput" ref="inputAgeInfo" placeholder="나이" v-model="inputAge">
+      <input type="text" class="refInput" ref="inputOccupationInfo" placeholder="직업" v-model="inputOccupation">
+      <button class="refBtn" type="button" @click="readRefs">확인</button>
   </div>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    readRefs () {
+      if (!this.inputName) {
+        this.$refs.inputNameInfo.focus()
+      } else if (!this.inputAge) {
+        this.$refs.inputAgeInfo.focus()
+      } else if (!this.inputOccupation) {
+        this.$refs.inputOccupationInfo.focus()
+      } else {
+        alert('모두 입력되었습니다.')
+      }
+    }
+  }
 }
 </script>
 
-<style>
+<style scoped>
 #ref {
     margin-top:30px;
     width: 250px;
@@ -21,7 +33,7 @@ export default {
     flex-direction: column;
 }
 
-#refBtn  {
+.refBtn {
     margin: 6px;
     font-weight:bold;
     padding: 6px;
@@ -31,7 +43,7 @@ export default {
     border:none;
 }
 
-#refInput {
+.refInput {
     padding:2px 8px;
     border-radius: 5px;
     border:1px solid #ddd;

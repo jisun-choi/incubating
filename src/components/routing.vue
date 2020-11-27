@@ -1,8 +1,8 @@
 <template>
     <div>
-        <button id="routingBtn" type="button" @click="directToHome">Home</button>
-        <button id="routingBtn" type="button" @click="directToPrevious">Back</button>
-        <button id="routingBtn" type="button" @click="directToNext">Next</button>
+        <button class="routingBtn" type="button" @click="directToHome">Home</button>
+        <button class="routingBtn" type="button" @click="directToPrevious">Back</button>
+        <button class="routingBtn" type="button" @click="directToNext">Next</button>
     </div>
 
 </template>
@@ -17,15 +17,14 @@ export default {
       this.$router.go(-1)
     },
     directToNext () {
-    //   this.$router.go(1)
-      this.$router.push({ path: '/vuex' })
+      this.$router.go(1)
     }
   }
 }
 </script>
 
-<style>
-#routingBtn {
+<style scoped>
+.routingBtn {
     font-weight:bold;
     margin: 50px 15px;
     padding: 10px 20px;
