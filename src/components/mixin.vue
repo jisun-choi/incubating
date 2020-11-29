@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import mixin from '../mixin/mixin.js'
+import mixin from '../mixins/mixin.js'
 
 export default {
   mixins: [mixin]
