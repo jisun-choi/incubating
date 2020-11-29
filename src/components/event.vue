@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     getKeycode () {
+      console.log(this.texts.toUpperCase().charCodeAt(0))
       console.log(this.texts)
       console.log(event.key)
       if (event.key == 'Backspace') {
@@ -38,10 +39,12 @@ export default {
       } else {
         this.keyCode.push(event.keyCode)
       }
+      this.$emit('keyup')
     },
     getMouseIndex() {
       this.xAxis = event.pageX
       this.yAxis = event.pageY
+      this.$emit('mousemove')
     },
     getDefaultIndex() {
       this.xAxis = 0
@@ -53,6 +56,7 @@ export default {
 
 <style scoped>
 #event {
+  justify-content: center;
   display: flex;
   padding: 30px;
 }

@@ -9,6 +9,7 @@
       <router-link to="/routing">routing</router-link>
       <router-link to="/vuex">vuex</router-link>
       <router-link to="/watch">watch</router-link>
+      <router-link to="/computed">computed</router-link>
     </div>
     <router-view/>
   </div>
