@@ -40,11 +40,11 @@ export default {
     },
     methods: {
         getChildData(data) {
-            // alert('지역 컴포넌트 이벤트 emit 입니다.')
+            alert('지역 컴포넌트 이벤트 emit 입니다.')
             this.presentedText = data;
         },
         showAlert() {
-            // alert.once('전역 컴포넌트 이벤트 emit 입니다.')
+            alert.once('전역 컴포넌트 이벤트 emit 입니다.')
         }
     }
 }
