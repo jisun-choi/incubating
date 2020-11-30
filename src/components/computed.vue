@@ -5,24 +5,32 @@
             <!-- 할인율 계산하는 div -->
             <div id="computeData">
                 <div>
-                    <input type="checkbox" :coupon="coupon" @click="changeCouponStatus">
-                    <span>쿠폰 할인</span>
-                    <input type="number" v-model="couponPrice" min=1000 :disabled="!this.coupon">
+                    <label>
+                        <input class="checkbox-input" type="checkbox" v-model="couponDiscounted">
+                        <span>쿠폰 할인</span>
+                    </label>
+                    <input type="number" v-model="couponPrice" min=1000 :disabled="!couponDiscounted">
                 </div>       
                 <div>
-                    <input type="checkbox" :discount="discount" @click="changeDiscountStatus">
-                    <span>일반 할인</span>
-                    <input type="number" v-model="discountRate" min=1 :disabled="!this.discount">
+                    <label>
+                        <input class="checkbox-input" type="checkbox" v-model="discountMap.general">
+                        <span>일반 할인</span>
+                    </label>
+                    <input type="number" v-model="discountRate" min=1 :disabled="!discountMap.general">
                 </div>
                 <div>
-                    <input type="checkbox" :eventDiscount="eventDiscount" @click="changeEventDiscountStatus">
-                    <span>이벤트 할인</span>
-                    <input type="number" min=1 v-model="eventDiscountRate" :disabled="!this.eventDiscount">
+                    <label>
+                        <input class="checkbox-input" type="checkbox" v-model="discountMap.event">
+                        <span>이벤트 할인</span>
+                    </label>
+                    <input type="number" min=1 v-model="eventDiscountRate" :disabled="!discountMap.event">
                 </div>
                 <div>
-                    <input type="checkbox" :staff="staff" @click="changeStaffDiscountStatus">
-                    <span>직원 할인</span>
-                    <input type="number" min=1 v-model="staffDiscountRate" :disabled="!this.staff">
+                    <label>
+                        <input class="checkbox-input" type="checkbox" v-model="discountMap.staff">
+                        <span>직원 할인</span>
+                    </label>
+                    <input type="number" min=1 v-model="staffDiscountRate" :disabled="!discountMap.staff">
                 </div>
                 <div>
                     <span>원가</span>
@@ -31,16 +39,17 @@
             </div>
             <!-- 할인가 보여주는 div -->
             <div id="showData">
-                <div class="discountedPrice" v-if="coupon">
+                <img src="https://www.venturesquare.net/wp-content/uploads/2019/03/hiver.jpg">
+                <div class="discounted-price" v-if="couponDiscounted">
                     <span>쿠폰 적용가 {{ couponPrice.toLocaleString() }} 원</span>
                 </div>
-                <div class="discountedPrice" v-if="discount">
+                <div class="discounted-price" v-if="discountMap.general">
                     <span>일반 할인 {{ discountRate }} %</span>
                 </div>
-                <div class="discountedPrice" v-if="eventDiscount">
+                <div class="discounted-price" v-if="discountMap.event">
                     <span>이벤트 할인 {{ eventDiscountRate }} %</span>
                 </div>
-                <div class="discountedPrice" v-if="staff">
+                <div class="discounted-price" v-if="discountMap.staff">
                     <span>직원 할인 {{ staffDiscountRate }} %</span>
                 </div>
                 <span> {{ totalPrice.toLocaleString() }} 원</span>
@@ -51,81 +60,74 @@
 
 <script>
 export default {
+    name: 'computed',
     data () {
         return {
-            coupon: false,
-            discount: false,
-            eventDiscount: false,
-            staff: false,
+            couponDiscounted: false, //쿠폰 할인여부
+            discountMap: {
+                general: false, // 일반 할인여부
+                event: false, // 이벤트 할인여부
+                staff: false //직원 할인여부
+            },
             couponPrice: 1000,
-            discountRate: 1,
-            eventDiscountRate:1,
-            staffDiscountRate:1,
-            regularPrice: ''
+            discountRate: 0,
+            eventDiscountRate:0,
+            staffDiscountRate:0,
+            regularPrice: 0
         }
     },
+
     methods: {
-        changeCouponStatus() {
-            if (this.coupon) {
-                this.coupon = false
-            } else {
-                this.coupon = true
-            }
-        },
-        changeDiscountStatus() {
-            if (this.discount) {
-                this.discount = false
-            } else {
-                this.discount = true
-            }
-        },
-        changeEventDiscountStatus() {
-            if (this.eventDiscount) {
-                this.eventDiscount = false
-            } else {
-                this.eventDiscount = true
-            }
-        },
-         changeStaffDiscountStatus() {
-            if (this.staff) {
-                this.staff = false
-            } else {
-                this.staff = true
-            }
+        setDiscountRatetoZero() {
+            if (this.hasDiscountRate) {
+                if (!this.discountMap.general) {
+                    this.discountRate = 0
+                } if (!this.discountMap.event) {
+                    this.eventDiscountRate = 0
+                } if (!this.discountMap.staff) {
+                    this.staffDiscountRate = 0
+                }
+            } return ''
         },
     },
     computed: {
-        // 할인 하나씩만 적용 ok 
-        // 위에서부터 순서대로 적용 ok
-        // 골라서 적용 안됨 ==============================????????=============================
-        totalPrice: function() {
-            var dcRate = this.discount || this.eventDiscount || this.staff
-            if (this.coupon) {
-                if (this.coupon && this.discount && !this.eventDiscount) {
-                    return this.regularPrice - this.couponPrice - (this.regularPrice * (this.discountRate * 0.01))
-                } else if (this.coupon && this.discount && this.eventDiscount && !this.staff) {
-                    return this.regularPrice - this.couponPrice - (this.regularPrice * (this.discountRate * 0.01)) - (this.regularPrice * (this.eventDiscountRate * 0.01))
-                }  else if (this.coupon && this.discount && this.eventDiscount && this.staff) {
-                    return this.regularPrice - this.couponPrice - (this.regularPrice * (this.discountRate * 0.01)) - (this.regularPrice * (this.eventDiscountRate * 0.01)) - (this.regularPrice * (this.staffDiscountRate * 0.01))
-                }
-                return this.regularPrice - this.couponPrice
-            } else if (dcRate) {
-                if (this.coupon) {
-                    return this.regularPrice - this.couponPrice
-                } else if (this.discount) {
-                    return this.regularPrice - (this.regularPrice * (this.discountRate * 0.01))
-                } else if (this.eventDiscount) {
-                    return this.regularPrice - (this.regularPrice * (this.eventDiscountRate * 0.01))
-                } else {
-                    return this.regularPrice - (this.regularPrice * (this.staffDiscountRate * 0.01))
+        // 할인율 적용여부 확인 
+        hasDiscountRate() {
+            for (let key in this.discountMap) {
+                if (this.discountMap[key]) return true
+            } return false 
+        },
+
+        totalPrice() {
+            //쿠폰 or 할인율 적용
+            if ( this.couponDiscounted || this.hasDiscountRate ) {
+                //쿠폰 선택 되었을 때
+                if (this.couponDiscounted) {
+                var finalPrice = this.regularPrice - this.couponPrice
+                } 
+                //할인율 선택 되었을 때 
+                if (this.hasDiscountRate) {
+                    //쿠폰도 선택되었을 때 
+                    if (this.couponDiscounted) {
+                        finalPrice = this.regularPrice - this.couponPrice
+                    } else {
+                        //할인율만 선택되었을 때 
+                        finalPrice = this.regularPrice
+                    }
+                    //선택되지 않은 할인율 0으로 만들어준다. (선택했다가 취소할 경우 필요)
+                    this.setDiscountRatetoZero()
+                    let discounted = Number(this.discountRate) + Number(this.eventDiscountRate) + Number(this.staffDiscountRate)
+
+                    finalPrice = finalPrice * (100 - discounted) * 0.01
                 }
             } else {
-                return this.regularPrice
-            }
+                //아무것도 적용하지 않을 경우
+                finalPrice = this.regularPrice
+            } return finalPrice
         }
-
     }
 }
+
 </script>
 
 <style scoped>
@@ -155,19 +157,34 @@ export default {
     padding: 10px;
 }
 
-.discountedPrice {
+.discounted-price {
     padding:5px;
     font-weight:bold;
     color:red;
     background-color: rgb(255, 230, 234);
 }
 
+.checkbox-input {
+    float: left;
+}
+
 div {
     margin: 10px 0px;
 }
+
 input {
     height:22px;
     border: 2px solid #ddd;
     border-radius: 4px;
+    float:right;
+}
+
+img {
+    width: 350px;
+    height: 300px;
+}
+
+span {
+    font-weight: bold;
 }
 </style>

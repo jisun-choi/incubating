@@ -9,7 +9,7 @@
       <img :src =result.imgSrc />
     </div>
     <div class="watchText">
-      <p id='title'>{{ result.titleData }}</p>
+      <p class="title">{{ result.titleData }}</p>
       <p>{{ result.text }}</p>
     </div>
   </div>
@@ -21,9 +21,6 @@ export default {
     return {
       selected: 'brandi',
       result: {
-        imgSrc: 'https://platum.kr/wp-content/uploads/2019/11/image.png',
-        titleData: 'MZ세대를 겨냥한 여성 쇼핑 플랫폼 입니다. ',
-        text: 'www.brandi.co.kr'
       },
       info: {
         brandi: {
@@ -47,14 +44,17 @@ export default {
     }
   },
   watch: {
-    selected: function () {
-      if (this.selected === 'brandi') {
-        this.result = this.info.brandi
-      } else if (this.selected === 'hiver') {
-        this.result = this.info.hiver
-      } else if (this.selected === 'helpi') {
-        this.result = this.info.helpi
-      }
+    selected: {
+      handler(){
+        if (this.selected === 'brandi') {
+          this.result = this.info.brandi
+        } else if (this.selected === 'hiver') {
+          this.result = this.info.hiver
+        } else if (this.selected === 'helpi') {
+          this.result = this.info.helpi
+        }
+      },
+      immediate: true
     }
   }
 }
@@ -69,10 +69,9 @@ export default {
   flex-direction: column;
 }
 
-#title {
+.title {
   font-weight: bold;
 }
-
 select {
   padding: 2px 5px;
   width:100px;

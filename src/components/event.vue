@@ -27,11 +27,11 @@ export default {
   },
   methods: {
     getKeycode () {
-      console.log(this.texts.toUpperCase().charCodeAt(0))
-      console.log(this.texts)
-      console.log(event.key)
       if (event.key == 'Backspace') {
-        this.keyCode.pop()
+        var removeKeycode = this.keyCode.length / this.texts.length
+        var reversedKeycode = this.keyCode.slice().reverse()
+        reversedKeycode.splice(0,removeKeycode-1)
+        this.keyCode  = reversedKeycode.slice().reverse()
       } else if (event.key == 'Shift' || event.key == 'CapsLock' || event.key == 'Enter') {
         this.keyCode
       } else if (event.keyCode == 32) {

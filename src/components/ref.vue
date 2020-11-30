@@ -1,9 +1,9 @@
 <template>
   <div id="ref">
-      <input type="text" class="refInput" ref="inputNameInfo" placeholder="이름" v-model="inputName">
-      <input type="text" class="refInput" ref="inputAgeInfo" placeholder="나이" v-model="inputAge">
-      <input type="text" class="refInput" ref="inputOccupationInfo" placeholder="직업" v-model="inputOccupation">
-      <button class="refBtn" type="button" @click="readRefs">확인</button>
+      <input type="text" class="ref-input" ref="inputNameInfo" placeholder="이름" v-model="inputName">
+      <input type="text" class="ref-input" ref="inputAgeInfo" placeholder="나이" v-model="inputAge">
+      <input type="text" class="ref-input" ref="inputOccupationInfo" placeholder="직업" v-model="inputOccupation">
+      <button class="ref-btn" type="button" @click="readRefs">확인</button>
   </div>
 </template>
 
@@ -43,7 +43,7 @@ export default {
     border:none;
 }
 
-.refInput {
+.ref-input {
     padding:2px 8px;
     border-radius: 5px;
     border:1px solid #ddd;

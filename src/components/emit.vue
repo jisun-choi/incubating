@@ -44,7 +44,7 @@ export default {
             this.presentedText = data;
         },
         showAlert() {
-            alert.once('전역 컴포넌트 이벤트 emit 입니다.')
+            alert('전역 컴포넌트 이벤트 emit 입니다.')
         }
     }
 }
