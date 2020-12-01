@@ -1,16 +1,16 @@
 <template>
-  <div id="event">
-    <div id="key-event-block">
+  <div class="event">
+    <div class="key-event-block">
       <h3>Key Event</h3>
       <input v-model="texts" @keyup="getKeycode()">
       <p>{{ texts }}</p>
-      <p>{{ keyCode }} </p>
+      <p>{{ keyCode }}</p>
     </div>
-    <div id="mouse-event-block">
+    <div class="mouse-event-block">
       <h3>Mouse Event</h3>
-      <div id="mouse-div" @mousemove="getMouseIndex()" @mouseleave="getDefaultIndex()"></div>
+      <div class="mouse-div" @mousemove="getMouseIndex()" @mouseleave="getDefaultIndex()"></div>
       <p>{{ xAxis }}</p>
-      <p>{{ yAxis }} </p>
+      <p>{{ yAxis }}</p>
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
         this.keyCode  = reversedKeycode.slice().reverse()
       } else if (event.key == 'Shift' || event.key == 'CapsLock' || event.key == 'Enter') {
         this.keyCode
-      } else if (event.keyCode == 32) {
+      } else if (event.keyCode == 32) { //스페이스바 누를 경우 공백 추가해줍니다. 
         this.keyCode.push('')
       } else {
         this.keyCode.push(event.keyCode)
@@ -55,29 +55,29 @@ export default {
 </script>
 
 <style scoped>
-#event {
-  justify-content: center;
+.event {
+ justify-content: center;
   display: flex;
   padding: 30px;
 }
 
-#key-event-block {
+.key-event-block {
   width:300px;
   margin: 20px;
 }
 
-#mouse-event-block {
+.mouse-event-block {
   margin: 20px;
 }
 
-#mouse-div {
+.mouse-div {
   width: 220px;
   height:300px;
   border: 2px solid #ddd;
   border-radius: 4px;
 }
 
-#mouse-div:hover {
+.mouse-div:hover {
   border-color:red;
 }
 
