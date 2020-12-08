@@ -60,7 +60,7 @@
 
 <script>
 export default {
-    name: 'computed',
+    name: "computed",
     data () {
         return {
             couponDiscounted: false, //쿠폰 할인여부

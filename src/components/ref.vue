@@ -1,14 +1,29 @@
 <template>
   <div id="ref">
-      <input type="text" class="ref-input" ref="inputNameInfo" placeholder="이름" v-model="inputName">
-      <input type="text" class="ref-input" ref="inputAgeInfo" placeholder="나이" v-model="inputAge">
-      <input type="text" class="ref-input" ref="inputOccupationInfo" placeholder="직업" v-model="inputOccupation">
-      <button class="ref-btn" type="button" @click="readRefs">확인</button>
+    <input type="text" class="ref-input" ref="inputNameInfo" placeholder="이름" v-model="inputName">
+    <input type="text" class="ref-input" ref="inputAgeInfo" placeholder="나이" v-model="inputAge">
+    <input type="text" class="ref-input" ref="inputOccupationInfo" placeholder="직업" v-model="inputOccupation">
+    <button class="ref-btn" type="button" @click="readRefs">확인</button>
+    <vuex></vuex>
   </div>
 </template>
 
 <script>
+import Vuex from './vuex.vue'
+
 export default {
+  name: "ref",
+  components: {
+    Vuex
+  },
+  data() {
+    return {
+      inputName: '',
+      inputAge: '',
+      inputOccupation:'',
+      inputData: {}
+    }
+  },
   methods: {
     readRefs () {
       if (!this.inputName) {
@@ -18,6 +33,10 @@ export default {
       } else if (!this.inputOccupation) {
         this.$refs.inputOccupationInfo.focus()
       } else {
+        this.inputData['name'] = this.inputName
+				this.inputData['age'] = this.inputAge
+				this.inputData['occupation'] = this.inputOccupation
+        this.$store.commit('updatePersonalInfo', this.inputData)
         alert('모두 입력되었습니다.')
       }
     }
@@ -33,7 +52,7 @@ export default {
     flex-direction: column;
 }
 
-.refBtn {
+.ref-btn {
     margin: 6px;
     font-weight:bold;
     padding: 6px;
