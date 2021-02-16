@@ -45,11 +45,11 @@ export default {
         this.keyCode.push("");
 =======
     getKeycode () {
+      console.log(this.texts.toUpperCase().charCodeAt(0))
+      console.log(this.texts)
+      console.log(event.key)
       if (event.key == 'Backspace') {
-        var removeKeycode = this.keyCode.length / this.texts.length
-        var reversedKeycode = this.keyCode.slice().reverse()
-        reversedKeycode.splice(0,removeKeycode-1)
-        this.keyCode  = reversedKeycode.slice().reverse()
+        this.keyCode.pop()
       } else if (event.key == 'Shift' || event.key == 'CapsLock' || event.key == 'Enter') {
         this.keyCode
       } else if (event.keyCode == 32) { //스페이스바 누를 경우 공백 추가해줍니다. 
