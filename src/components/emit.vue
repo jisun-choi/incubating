@@ -1,11 +1,11 @@
 <template>
-  <div id="emit">
-      <h1>(local components)</h1>
+  <div class="emit">
+      <h3>(local components)</h3>
       <key-event
-      :presentedText="this.presentedText"
+      :presentedText="presentedText"
       @keyup="getChildData"></key-event>
       <p>{{ presentedText }}</p>
-      <h1>(global components)</h1>
+      <h3>(global components)</h3>
       <event @keyup="showAlert"></event>
   </div>
 </template>
@@ -13,12 +13,12 @@
 <script>
 import event from './event.vue'
 
-var keyEvent = {
+let keyEvent = {
     template: 
     '<div><input v-model="texts" @keyup="sendEvent()"></div>',
     data() {
         return {
-            texts:'Child',
+            texts: 'Child',
         }
     },
     methods: {
@@ -40,11 +40,11 @@ export default {
     },
     methods: {
         getChildData(data) {
-            alert('지역 컴포넌트 이벤트 emit 입니다.')
+            // alert('지역 컴포넌트 이벤트 emit 입니다.')
             this.presentedText = data;
         },
         showAlert() {
-            alert('전역 컴포넌트 이벤트 emit 입니다.')
+            // alert('전역 컴포넌트 이벤트 emit 입니다.')
         }
     }
 }

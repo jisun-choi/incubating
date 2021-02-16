@@ -10,6 +10,7 @@
       <router-link to="/vuex">vuex</router-link>
       <router-link to="/watch">watch</router-link>
       <router-link to="/computed">computed</router-link>
+      <router-link to="/nexttick">nextTick</router-link>
     </div>
     <router-view/>
   </div>

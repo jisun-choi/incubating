@@ -1,5 +1,6 @@
 <template>
   <div id="ref">
+<<<<<<< HEAD
     <input type="text" class="ref-input" ref="inputNameInfo" placeholder="이름" v-model="inputName" />
     <input type="text" class="ref-input" ref="inputAgeInfo" placeholder="나이" v-model="inputAge" />
     <input
@@ -9,13 +10,22 @@
       placeholder="직업"
       v-model="inputOccupation"
     />
+=======
+    <input type="text" class="ref-input" ref="inputNameInfo" placeholder="이름" v-model="inputName">
+    <input type="text" class="ref-input" ref="inputAgeInfo" placeholder="나이" v-model="inputAge">
+    <input type="text" class="ref-input" ref="inputOccupationInfo" placeholder="직업" v-model="inputOccupation">
+>>>>>>> 8447ff9c0ca0fdc0ca26a28f3e4af444203bd531
     <button class="ref-btn" type="button" @click="readRefs">확인</button>
     <vuex></vuex>
   </div>
 </template>
 
 <script>
+<<<<<<< HEAD
 import Vuex from "./vuex.vue";
+=======
+import Vuex from './vuex.vue'
+>>>>>>> 8447ff9c0ca0fdc0ca26a28f3e4af444203bd531
 
 export default {
   name: "ref",
@@ -24,11 +34,19 @@ export default {
   },
   data() {
     return {
+<<<<<<< HEAD
       inputName: "",
       inputAge: "",
       inputOccupation: "",
       inputData: {}
     };
+=======
+      inputName: '',
+      inputAge: '',
+      inputOccupation:'',
+      inputData: {}
+    }
+>>>>>>> 8447ff9c0ca0fdc0ca26a28f3e4af444203bd531
   },
   methods: {
     readRefs() {
@@ -39,12 +57,20 @@ export default {
       } else if (!this.inputOccupation) {
         this.$refs.inputOccupationInfo.focus();
       } else {
+<<<<<<< HEAD
         this.inputData["name"] = this.inputName;
         this.inputData["age"] = this.inputAge;
         this.inputData["occupation"] = this.inputOccupation;
         // this.$store.commit("updatePersonalInfo", this.inputData);
         console.log(this.inputData);
         alert("모두 입력되었습니다.");
+=======
+        this.inputData['name'] = this.inputName
+				this.inputData['age'] = this.inputAge
+				this.inputData['occupation'] = this.inputOccupation
+        this.$store.commit('updatePersonalInfo', this.inputData)
+        alert('모두 입력되었습니다.')
+>>>>>>> 8447ff9c0ca0fdc0ca26a28f3e4af444203bd531
       }
     }
   }
@@ -60,6 +86,7 @@ export default {
 }
 
 .ref-btn {
+<<<<<<< HEAD
   margin: 6px;
   font-weight: bold;
   padding: 6px;
@@ -67,6 +94,15 @@ export default {
   color: white;
   border-radius: 5px;
   border: none;
+=======
+    margin: 6px;
+    font-weight:bold;
+    padding: 6px;
+    background-color:#FF204B;
+    color:white;
+    border-radius: 5px;
+    border:none;
+>>>>>>> 8447ff9c0ca0fdc0ca26a28f3e4af444203bd531
 }
 
 .ref-input {

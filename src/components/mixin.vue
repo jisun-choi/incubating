@@ -1,10 +1,10 @@
 <template>
-  <div id="mixin" @click="cardClick()">
-    <div class="mixinImage">
+  <div class="mixin" @click="cardClick()">
+    <div class="mixin-image">
       <img :src =brandi.imgSrc />
     </div>
-    <div class="mixinText">
-      <p id='title'>{{ brandi.titleData }}</p>
+    <div class="mixin-text">
+      <p class="title">{{ brandi.titleData }}</p>
       <p>{{ brandi.text }}</p>
     </div>
   </div>
@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style scoped>
-#mixin {
+.mixin {
   margin-top:30px;
   margin-left:30px;
   width: 250px;
@@ -27,7 +27,7 @@ export default {
   flex-direction: column;
 }
 
-#title {
+.title {
   font-weight: bold;
 }
 
@@ -35,14 +35,14 @@ img {
   width:300px;
 }
 
-.mixinImage {
+.mixin-image {
   border: 1px solid #ddd;
   border-bottom: none;
   margin-top:20px;
   width: 300px;
 }
 
-.mixinText {
+.mixin-text {
   border: 1px solid #ddd;
   border-top: none;
   width: 300px;

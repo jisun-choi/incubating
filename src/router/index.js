@@ -10,6 +10,7 @@ import routing from '../components/routing.vue'
 import vuex from '../components/vuex.vue'
 import watch from '../components/watch.vue'
 import computed from '../components/computed.vue'
+import nexttick from '../components/nextTick.vue'
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,11 @@ const routes = [
     path: '/computed',
     name: 'Computed',
     component: computed
+  },
+  {
+    path: '/nexttick',
+    name: 'nexttick',
+    component: nexttick
   }
 ]
 

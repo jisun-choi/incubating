@@ -1,9 +1,9 @@
 <template>
     <div id="computed">
         <h1>computed</h1>
-        <div id="box">
+        <div class="box">
             <!-- 할인율 계산하는 div -->
-            <div id="computeData">
+            <div class="computeData">
                 <div>
                     <label>
                         <input class="checkbox-input" type="checkbox" v-model="couponDiscounted">
@@ -16,32 +16,32 @@
                         <input class="checkbox-input" type="checkbox" v-model="discountMap.general">
                         <span>일반 할인</span>
                     </label>
-                    <input type="number" v-model="discountRate" min=1 :disabled="!discountMap.general">
+                    <input type="number" v-model="discountRate" min="1" :disabled="!discountMap.general">
                 </div>
                 <div>
                     <label>
                         <input class="checkbox-input" type="checkbox" v-model="discountMap.event">
                         <span>이벤트 할인</span>
                     </label>
-                    <input type="number" min=1 v-model="eventDiscountRate" :disabled="!discountMap.event">
+                    <input type="number" min="1" v-model="eventDiscountRate" :disabled="!discountMap.event">
                 </div>
                 <div>
                     <label>
                         <input class="checkbox-input" type="checkbox" v-model="discountMap.staff">
                         <span>직원 할인</span>
                     </label>
-                    <input type="number" min=1 v-model="staffDiscountRate" :disabled="!discountMap.staff">
+                    <input type="number" min="1" v-model="staffDiscountRate" :disabled="!discountMap.staff">
                 </div>
                 <div>
                     <span>원가</span>
-                    <input v-model="regularPrice">
+                    <input type="number" v-model="regularPrice">
                 </div>
             </div>
             <!-- 할인가 보여주는 div -->
-            <div id="showData">
+            <div class="showData">
                 <img src="https://www.venturesquare.net/wp-content/uploads/2019/03/hiver.jpg">
                 <div class="discounted-price" v-if="couponDiscounted">
-                    <span>쿠폰 적용가 {{ couponPrice.toLocaleString() }} 원</span>
+                    <span>쿠폰 적용가 {{ makeComma(couponPrice) }} 원</span>
                 </div>
                 <div class="discounted-price" v-if="discountMap.general">
                     <span>일반 할인 {{ discountRate }} %</span>
@@ -52,7 +52,7 @@
                 <div class="discounted-price" v-if="discountMap.staff">
                     <span>직원 할인 {{ staffDiscountRate }} %</span>
                 </div>
-                <span> {{ totalPrice.toLocaleString() }} 원</span>
+                <span> {{ makeComma(totalPrice) }} 원</span>
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
 
 <script>
 export default {
-    name: 'computed',
+    name: "computed",
     data () {
         return {
             couponDiscounted: false, //쿠폰 할인여부
@@ -70,25 +70,17 @@ export default {
                 staff: false //직원 할인여부
             },
             couponPrice: 1000,
-            discountRate: 0,
-            eventDiscountRate:0,
-            staffDiscountRate:0,
+            discountRate: 1,
+            eventDiscountRate:1,
+            staffDiscountRate:1,
             regularPrice: 0
         }
     },
 
     methods: {
-        setDiscountRatetoZero() {
-            if (this.hasDiscountRate) {
-                if (!this.discountMap.general) {
-                    this.discountRate = 0
-                } if (!this.discountMap.event) {
-                    this.eventDiscountRate = 0
-                } if (!this.discountMap.staff) {
-                    this.staffDiscountRate = 0
-                }
-            } return ''
-        },
+        makeComma(val) {
+            return (val+'').replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
     },
     computed: {
         // 할인율 적용여부 확인 
@@ -97,41 +89,37 @@ export default {
                 if (this.discountMap[key]) return true
             } return false 
         },
-
         totalPrice() {
-            //쿠폰 or 할인율 적용
-            if ( this.couponDiscounted || this.hasDiscountRate ) {
-                //쿠폰 선택 되었을 때
-                if (this.couponDiscounted) {
-                var finalPrice = this.regularPrice - this.couponPrice
-                } 
-                //할인율 선택 되었을 때 
-                if (this.hasDiscountRate) {
-                    //쿠폰도 선택되었을 때 
-                    if (this.couponDiscounted) {
-                        finalPrice = this.regularPrice - this.couponPrice
-                    } else {
-                        //할인율만 선택되었을 때 
-                        finalPrice = this.regularPrice
-                    }
-                    //선택되지 않은 할인율 0으로 만들어준다. (선택했다가 취소할 경우 필요)
-                    this.setDiscountRatetoZero()
-                    let discounted = Number(this.discountRate) + Number(this.eventDiscountRate) + Number(this.staffDiscountRate)
+            let finalPrice = this.regularPrice 
+            let totalDCRate = 0 // 총 할인율 
+            //쿠폰 선택 되었을 때
+            if (this.couponDiscounted) {
+                finalPrice -= this.couponPrice
+            } 
+            // 일반 할인이 있는경우 
+            if (this.discountMap.general) {
+                totalDCRate += Number(this.discountRate)
+            } 
+            // 이벤트 할인이 있는경우 
+            if (this.discountMap.event) {
+                totalDCRate += Number(this.eventDiscountRate)
+            } 
+            // 직원 할인이 있는경우 
+            if (this.discountMap.staff) {
+                totalDCRate += Number(this.staffDiscountRate)
+            } 
+            if (totalDCRate > 0) {
+                finalPrice = finalPrice - Math.floor(finalPrice * totalDCRate / 100)
+            }
 
-                    finalPrice = finalPrice * (100 - discounted) * 0.01
-                }
-            } else {
-                //아무것도 적용하지 않을 경우
-                finalPrice = this.regularPrice
-            } return finalPrice
+            return finalPrice
         }
     }
 }
-
 </script>
 
 <style scoped>
-#box {
+.box {
     width:800px;
     display: flex;
     justify-content: center;
@@ -140,7 +128,7 @@ export default {
     padding: 20px;
 }
 
-#computeData {
+.computeData {
     width:500px;
     border: 1px solid #ddd;
     border-radius: 3px;
@@ -149,7 +137,7 @@ export default {
     font-weight: bold;
 }
 
-#showData {
+.showData {
     width:400px;
     border: 1px solid #ddd;
     border-radius: 3px;
