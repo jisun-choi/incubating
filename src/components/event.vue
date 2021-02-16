@@ -2,56 +2,67 @@
   <div id="event">
     <div id="key-event-block">
       <h3>Key Event</h3>
-      <input v-model="texts" @keyup="getKeycode()">
+      <input v-model="texts" @keyup="getKeycode()" />
       <p>{{ texts }}</p>
-      <p>{{ keyCode }} </p>
+      <p>{{ keyCode }}</p>
     </div>
     <div id="mouse-event-block">
       <h3>Mouse Event</h3>
       <div id="mouse-div" @mousemove="getMouseIndex()" @mouseleave="getDefaultIndex()"></div>
       <p>{{ xAxis }}</p>
-      <p>{{ yAxis }} </p>
+      <p>{{ yAxis }}</p>
     </div>
   </div>
 </template>
 
 <script>
+const Hangul = require("hangul-js");
+
 export default {
-  data () {
+  data() {
     return {
-      texts: '',
+      texts: "",
       keyCode: [],
       xAxis: 0,
       yAxis: 0
-    }
+    };
   },
   methods: {
-    getKeycode () {
-      if (event.key == 'Backspace') {
-        var removeKeycode = this.keyCode.length / this.texts.length
-        var reversedKeycode = this.keyCode.slice().reverse()
-        reversedKeycode.splice(0,removeKeycode-1)
-        this.keyCode  = reversedKeycode.slice().reverse()
-      } else if (event.key == 'Shift' || event.key == 'CapsLock' || event.key == 'Enter') {
-        this.keyCode
+    getKeycode() {
+      if (event.key == "Backspace") {
+        // var removeKeycode = this.keyCode.length / this.texts.length
+        // var reversedKeycode = this.keyCode.slice().reverse()
+        // reversedKeycode.splice(0,removeKeycode-1)
+        // this.keyCode  = reversedKeycode.slice().reverse()
+      } else if (
+        event.key == "Shift" ||
+        event.key == "CapsLock" ||
+        event.key == "Enter"
+      ) {
+        this.keyCode;
       } else if (event.keyCode == 32) {
-        this.keyCode.push('')
+        this.keyCode.push("");
       } else {
-        this.keyCode.push(event.keyCode)
+        if (Hangul.isComplete(this.texts)) {
+          console.log(this.texts, "한글");
+          console.log(this.keyCode, "키코드");
+        }
+        console.log(Hangul.isComplete(this.texts));
+        this.keyCode.push(event.keyCode);
       }
-      this.$emit('keyup')
+      this.$emit("keyup");
     },
     getMouseIndex() {
-      this.xAxis = event.pageX
-      this.yAxis = event.pageY
-      this.$emit('mousemove')
+      this.xAxis = event.pageX;
+      this.yAxis = event.pageY;
+      this.$emit("mousemove");
     },
     getDefaultIndex() {
-      this.xAxis = 0
-      this.yAxis = 0
+      this.xAxis = 0;
+      this.yAxis = 0;
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -62,7 +73,7 @@ export default {
 }
 
 #key-event-block {
-  width:300px;
+  width: 300px;
   margin: 20px;
 }
 
@@ -72,22 +83,22 @@ export default {
 
 #mouse-div {
   width: 220px;
-  height:300px;
+  height: 300px;
   border: 2px solid #ddd;
   border-radius: 4px;
 }
 
 #mouse-div:hover {
-  border-color:red;
+  border-color: red;
 }
 
 h3 {
-  font-weight:bold;
+  font-weight: bold;
 }
 
 input {
-  width:230px;
-  height:22px;
+  width: 230px;
+  height: 22px;
   border: 2px solid #ddd;
   border-radius: 4px;
 }
